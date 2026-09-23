@@ -20,6 +20,8 @@ environments:
 
 volume:
   mountPath: /var/lib/backoffice-demo
+  uid: 1000
+  gid: 1000
 
 resources:
   cpu: 500
