@@ -1,0 +1,20 @@
+---
+name: CI
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v19
+      - name: Check assembly
+        run: nix flake check --print-build-logs

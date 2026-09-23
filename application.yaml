@@ -1,0 +1,24 @@
+---
+application:
+  name: backoffice-demo
+  port: 3000
+  healthPath: /api/health
+
+modules:
+  config:
+    - deploy/config.hcl
+
+environments:
+  demo:
+    domain: backoffice-demo.sacha.house
+    noIndex: true
+    modules:
+      task:
+        - deploy/task-demo.hcl
+
+volume:
+  mountPath: /var/lib/backoffice-demo
+
+resources:
+  cpu: 500
+  memory: 1024
