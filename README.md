@@ -4,9 +4,9 @@ This repository describes a separate demonstration deployment of the published `
 
 ## Current status
 
-The public npm registry returned 404 for `@sachahjkl/backoffice` on 23 September 2026. The manifest pins version `0.2.5`, matching the standalone package manifest, but installation and image builds are blocked. There is no `package-lock.json` or verified Nix dependency hash yet. Do not deploy an image from this directory until the published package resolves and the checks pass.
+The manifest pins the published npm package at version `0.2.5`. The lock file records the archive integrity and transitive dependency versions.
 
-After publication, run `npm install --package-lock-only --ignore-scripts` and commit the generated lock. Run `nix build .#dockerImage` to obtain the actual `fetchNpmDeps` hash, then replace `lib.fakeHash` in `flake.nix` with that hash. Run `nix flake check` and `nix build .#dockerImage` again. The image uses Node.js 26, Typst, and only the published npm dependency. The standalone command migrates the database before it serves the packaged web application.
+Run `nix flake check` and build the image before deployment. The image uses Node.js 26, Typst, and only the published npm dependency. The application command migrates the database before it serves the packaged web application.
 
 ## Demo data
 

@@ -37,28 +37,16 @@
         inherit (pkgs) lib;
         package = builtins.fromJSON (builtins.readFile ./package.json);
         # Do not permit a release without a registry-generated lock and its verified Nix hash.
-        assembly = pkgs.stdenv.mkDerivation {
+        assembly = pkgs.buildNpmPackage {
           pname = package.name;
           inherit (package) version;
           src = lib.fileset.toSource {
             root = ./.;
             fileset = lib.fileset.unions [./package.json ./package-lock.json];
           };
-          npmDeps = pkgs.fetchNpmDeps {
-            inherit (package) version;
-            pname = package.name;
-            src = lib.fileset.toSource {
-              root = ./.;
-              fileset = lib.fileset.unions [./package.json ./package-lock.json];
-            };
-            hash = lib.fakeHash;
-          };
-          nativeBuildInputs = [pkgs.nodejs_26 pkgs.npmConfigHook];
-          buildPhase = ''
-            runHook preBuild
-            npm ci --offline --omit=dev
-            runHook postBuild
-          '';
+          nodejs = pkgs.nodejs_26;
+          npmDepsHash = "sha256-yLcNZ+CMcPLpdPCdneOzvK9qUQ9d0lNlDMvtu1cRV04=";
+          dontNpmBuild = true;
           installPhase = ''
             runHook preInstall
             mkdir -p "$out/lib/backoffice-demo" "$out/bin"
