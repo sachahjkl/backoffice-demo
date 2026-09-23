@@ -42,7 +42,7 @@
           inherit (package) version;
           src = lib.fileset.toSource {
             root = ./.;
-            fileset = lib.fileset.unions [./package.json ./package-lock.json];
+            fileset = lib.fileset.unions [./package.json ./package-lock.json ./brand/acme.png];
           };
           nodejs = pkgs.nodejs_26;
           npmDepsHash = "sha256-9xyvyDeoLHCT6L7YT7/0tko/mNHB62hpfWklp7WRdIs=";
@@ -51,6 +51,7 @@
             runHook preInstall
             mkdir -p "$out/lib/backoffice-demo" "$out/bin"
             cp -r node_modules package.json "$out/lib/backoffice-demo/"
+            cp brand/acme.png "$out/lib/backoffice-demo/node_modules/@sachahjkl/backoffice/dist/web/brand/acme.png"
             ln -s "$out/lib/backoffice-demo/node_modules/.bin/froment-backoffice" "$out/bin/froment-backoffice"
             runHook postInstall
           '';

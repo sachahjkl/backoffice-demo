@@ -6,6 +6,7 @@
         PUBLIC_ORIGIN           = "https://backoffice-demo.sacha.house"
         DATABASE_PATH           = "/var/lib/backoffice-demo/froment.sqlite"
         ENTERPRISE_NAME         = "ACME"
+        ENTERPRISE_LOGO_URL     = "/brand/acme.png"
         TRUSTED_PROXY_ADDRESSES = "172.18.0.1"
       }
 
