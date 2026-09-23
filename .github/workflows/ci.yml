@@ -15,7 +15,7 @@ jobs:
       contents: read
       id-token: write
       packages: write
-    uses: sachahjkl/deployment-actions/.github/workflows/application-ci.yml@v6.0.5
+    uses: sachahjkl/deployment-actions/.github/workflows/application-ci.yml@v6.0.6
     with:
       deployment-environment: demo
 
