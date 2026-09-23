@@ -1,5 +1,6 @@
       env {
         APP_ENV                 = "staging"
+        DEMO_MODE               = "true"
         SITE_PHASE              = "live"
         NODE_ENV                = "production"
         PUBLIC_ORIGIN           = "https://backoffice-demo.sacha.house"

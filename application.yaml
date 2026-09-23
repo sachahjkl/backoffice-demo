@@ -13,6 +13,8 @@ environments:
     domain: backoffice-demo.sacha.house
     noIndex: true
     modules:
+      group:
+        - deploy/group-demo.hcl
       task:
         - deploy/task-demo.hcl
 

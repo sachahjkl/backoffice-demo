@@ -1,4 +1,5 @@
 ---
+# yamllint disable rule:line-length
 name: CI
 
 on:  # yamllint disable-line rule:truthy
@@ -7,14 +8,33 @@ on:  # yamllint disable-line rule:truthy
   pull_request:
     branches: [master]
 
-permissions:
-  contents: read
-
 jobs:
-  check:
+  platform:
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+      packages: write
+    uses: sachahjkl/deployment-actions/.github/workflows/application-ci.yml@v6.0.3
+    with:
+      deployment-environment: demo
+
+  schedule-reset:
+    needs: platform
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
+    environment: demo
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      NOMAD_ADDR: http://homelab.panthera-python.ts.net:4646
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v19
-      - name: Check assembly
-        run: nix flake check --print-build-logs
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: sachahjkl/deployment-actions/.github/actions/setup-deployment@6f561705d9b1e662bb7dbd0852b1f8368e3ba3b4
+      - name: Schedule daily demo reset
+        run: |
+          image=$(nomad job inspect -namespace=demo -json backoffice-demo | jq -er '.Meta.image')
+          nomad job run -namespace=demo -var="image=$image" deploy/reset.nomad.hcl
