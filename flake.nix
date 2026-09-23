@@ -45,7 +45,7 @@
             fileset = lib.fileset.unions [./package.json ./package-lock.json];
           };
           nodejs = pkgs.nodejs_26;
-          npmDepsHash = "sha256-XTnIP98u5k5E7t+TGPZWe9t8reKfaxtf794zYwqILcg=";
+          npmDepsHash = "sha256-9xyvyDeoLHCT6L7YT7/0tko/mNHB62hpfWklp7WRdIs=";
           dontNpmBuild = true;
           installPhase = ''
             runHook preInstall

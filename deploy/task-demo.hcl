@@ -5,6 +5,7 @@
         NODE_ENV                = "production"
         PUBLIC_ORIGIN           = "https://backoffice-demo.sacha.house"
         DATABASE_PATH           = "/var/lib/backoffice-demo/froment.sqlite"
+        ENTERPRISE_NAME         = "ACME"
         TRUSTED_PROXY_ADDRESSES = "172.18.0.1"
       }
 

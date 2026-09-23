@@ -41,6 +41,7 @@ job "backoffice-demo-reset" {
         DEMO_MODE          = "true"
         DATABASE_PATH      = "/var/lib/backoffice-demo/froment.sqlite"
         BUSINESS_TIME_ZONE = "Europe/Paris"
+        ENTERPRISE_NAME    = "ACME"
       }
 
       template {

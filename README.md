@@ -10,7 +10,7 @@ Run `nix flake check` and build the image before deployment. The image uses Node
 
 ## Demo data
 
-The demo runs with `APP_ENV=staging` and `DEMO_MODE=true`. The `seed` prestart task migrates its database and creates synthetic data before the server starts. The login page displays synthetic accounts and their shared password. A Nomad batch job restores the data daily at 04:00 UTC. The reset changes this demo database only.
+The demo runs with `APP_ENV=staging` and `DEMO_MODE=true`. The `seed` prestart task migrates its database and creates synthetic data before the server starts. `ENTERPRISE_NAME=ACME` names the company in each reset and its generated documents. The login page displays synthetic accounts and their shared password. A Nomad batch job restores the data daily at 04:00 UTC. The reset changes this demo database only.
 
 Keep the database at `/var/lib/backoffice-demo/froment.sqlite`. Nomad creates the dedicated host volume for UID and GID `1000`, matching the container user. Never use an existing Froment volume or import production data. Back up the volume before a reset if you need to keep its current contents.
 
