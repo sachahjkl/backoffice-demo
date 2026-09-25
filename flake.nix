@@ -36,6 +36,18 @@
       pkgs.lib.optionalAttrs (builtins.pathExists ./package-lock.json) (let
         inherit (pkgs) lib;
         package = builtins.fromJSON (builtins.readFile ./package.json);
+        publishedVersion = (builtins.fromJSON (builtins.readFile ./package-lock.json)).packages."node_modules/@sachahjkl/backoffice".version;
+        commit =
+          if self ? rev then self.rev
+          else if self ? dirtyRev then self.dirtyRev
+          else "0000000000000000000000000000000000000000";
+        deploymentMetadata = builtins.toJSON {
+          inherit commit;
+          packages = [
+            { name = "@froment/api"; version = publishedVersion; }
+            { name = "@sachahjkl/backoffice"; version = publishedVersion; }
+          ];
+        };
         # Do not permit a release without a registry-generated lock and its verified Nix hash.
         assembly = pkgs.buildNpmPackage {
           pname = package.name;
@@ -45,7 +57,7 @@
             fileset = lib.fileset.unions [./package.json ./package-lock.json ./brand/acme.png];
           };
           nodejs = pkgs.nodejs_26;
-          npmDepsHash = "sha256-gch4jA3/zZMzQGVFYoD9t8Ey99Ja7n5Xe0tMR96wgsA=";
+          npmDepsHash = "sha256-2FfHV1y9XAz5jVFh5IT9VKH70q5etTwHsRQwbBdDBDE=";
           dontNpmBuild = true;
           installPhase = ''
             runHook preInstall
@@ -78,6 +90,7 @@
               "DATABASE_PATH=/var/lib/backoffice-demo/froment.sqlite"
               "PORT=3000"
               "NODE_ENV=production"
+              "DEPLOYMENT_METADATA=${deploymentMetadata}"
               "PATH=${lib.makeBinPath [assembly pkgs.nodejs-slim_26 pkgs.typst]}"
               "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
               "HOME=/var/lib/backoffice-demo"
