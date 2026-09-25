@@ -45,7 +45,7 @@
             fileset = lib.fileset.unions [./package.json ./package-lock.json ./brand/acme.png];
           };
           nodejs = pkgs.nodejs_26;
-          npmDepsHash = "sha256-VyjbxqRxiJUu6QRjRCerWqitw49pUIDR6oDBNOukXwI=";
+          npmDepsHash = "sha256-gch4jA3/zZMzQGVFYoD9t8Ey99Ja7n5Xe0tMR96wgsA=";
           dontNpmBuild = true;
           installPhase = ''
             runHook preInstall
