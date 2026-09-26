@@ -67,6 +67,8 @@
             mkdir -p "$out/lib/backoffice-demo" "$out/bin"
             cp -r node_modules package.json "$out/lib/backoffice-demo/"
             cp brand/acme.png "$out/lib/backoffice-demo/node_modules/@sachahjkl/backoffice/dist/web/brand/acme.png"
+            sed -i 's#</head>#<link rel="icon" type="image/png" href="/brand/acme.png" /><link rel="apple-touch-icon" href="/brand/acme.png" /></head>#' \
+              "$out/lib/backoffice-demo/node_modules/@sachahjkl/backoffice/dist/web/index.csr.html"
             ln -s "$out/lib/backoffice-demo/node_modules/.bin/froment-backoffice" "$out/bin/froment-backoffice"
             runHook postInstall
           '';
