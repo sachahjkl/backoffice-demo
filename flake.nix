@@ -60,15 +60,13 @@
             fileset = lib.fileset.unions [./package.json ./package-lock.json ./brand/acme.png];
           };
           nodejs = pkgs.nodejs_26;
-          npmDepsHash = "sha256-2FfHV1y9XAz5jVFh5IT9VKH70q5etTwHsRQwbBdDBDE=";
+          npmDepsHash = "sha256-VM9UeKR1ZPlq2QuC/zstX/bi1y2bYzi3ny9XiL6IoOY=";
           dontNpmBuild = true;
           installPhase = ''
             runHook preInstall
             mkdir -p "$out/lib/backoffice-demo" "$out/bin"
             cp -r node_modules package.json "$out/lib/backoffice-demo/"
             cp brand/acme.png "$out/lib/backoffice-demo/node_modules/@sachahjkl/backoffice/dist/web/brand/acme.png"
-            sed -i 's#</head>#<link rel="icon" type="image/png" href="/brand/acme.png" /><link rel="apple-touch-icon" href="/brand/acme.png" /></head>#' \
-              "$out/lib/backoffice-demo/node_modules/@sachahjkl/backoffice/dist/web/index.csr.html"
             ln -s "$out/lib/backoffice-demo/node_modules/.bin/froment-backoffice" "$out/bin/froment-backoffice"
             runHook postInstall
           '';
