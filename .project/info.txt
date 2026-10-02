@@ -1,0 +1,2 @@
+name=Froment Backoffice Demo
+description=A deployment package that combines the Froment backoffice with synthetic demo data for an isolated Nomad environment.
